@@ -26,7 +26,7 @@ solver = "Euler";
 J_values = 0:0.05:1; % Parameter J
 K_values = -1:0.05:1; % Parameter K
 F_ext_values = 0:0.1:10; % External force values
-Omega_ext = 1; % External frequency
+Omega_ext = pi/4; % External frequency
 
 % Preallocate results storage
 results = struct();
