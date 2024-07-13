@@ -17,7 +17,7 @@ addpath(genpath('src'));
 % Parameters
 A = 1; % Parameter A
 B = 1; % Parameter B
-N = 10; % Number of swarmalators
+N = 100; % Number of swarmalators
 dt = 0.1; % Time step
 T = 50; % Total time
 solver = "Euler";
@@ -25,8 +25,8 @@ solver = "Euler";
 % Varying parameters
 J_values = 0:0.05:1; % Parameter J
 K_values = -1:0.05:1; % Parameter K
-F_ext_values = 0.1:0.1:10; % External force values
-Omega_ext = 3*pi/2; % External frequency
+F_ext_values = 0:0.1:10; % External force values
+Omega_ext = 1; % External frequency
 
 % Preallocate results storage
 results = struct();
@@ -62,10 +62,11 @@ parfor idx = 1:length(J_values)*length(K_values)
 
         % Compute order parameters
         transient_period = 0; % Adjust if you have a specific transient period to discard
-        [S, R] = compute_order_parameters_forced(x, theta);
+        [S, error] = compute_order_parameters_pinned(x, theta, Omega_ext);
+        error = error/N;
 
         % Check if synchronization is achieved (R approximately 1)
-        if abs(R - 1) < 0.01
+        if abs(error) < 0.02
             min_F_ext = F_ext;
             sync_achieved = true;
             break;
