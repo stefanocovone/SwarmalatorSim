@@ -121,7 +121,7 @@ https://github.com/user-attachments/assets/48af887e-f00a-42cd-971a-4a9381ba0591
 
 ### Pinned system
 
-- $J=0.5$, $K=1$
+- $J=0.5$, $K=1$, $\sigma = 5$
 
 https://github.com/user-attachments/assets/8506b49a-c1cc-40ce-bac9-83763460067e
 
