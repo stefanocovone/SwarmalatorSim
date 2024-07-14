@@ -1,4 +1,5 @@
 # SwarmalatorSim
+![swarmalators](https://github.com/user-attachments/assets/6a583df2-68d2-4b8d-9318-47da893998ed)
  
 This repository contains the supplementary material for "Swarmalators: Oscillators that sync and swarm", the final project developed for the Control of Complex Systems and Networks exam. 
 
