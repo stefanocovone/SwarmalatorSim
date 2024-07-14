@@ -37,6 +37,7 @@ function plot_minimal_forcing_heatmap(dataFolder, fileName, savePath)
     set(gca, 'YDir', 'normal');
     xlabel('K', 'Interpreter', 'latex');
     ylabel('J', 'Interpreter', 'latex');
+    % clim([0 5])
     % title('Heatmap of Minimal Forcing Values for Synchronization', 'Interpreter', 'latex');
     colorbar;
     set(gca, 'FontSize', 12, 'TickLabelInterpreter', 'latex');

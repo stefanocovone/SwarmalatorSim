@@ -32,8 +32,8 @@ function dydt = swarmalator_pinned_ode(t, y, A, J, B, K, F_ext, Omega_ext, N, om
     % Pinning control term
     diff_x0 = x0_ext - x;
     distances_x0 = sqrt(sum(diff_x0.^2, 2));
-    pinned = ones(N, 1);
-    % pinned(1:10) = 1;
+    pinned = zeros(N, 1);
+    pinned(1:70) = 1;
     forcing_term = F_ext .* pinned .* sin(Omega_ext * t - theta) + 0*F_ext .* sum(diff_theta, 2);
     
     % Combine derivatives

@@ -1,4 +1,4 @@
-function [S, R] = compute_order_parameters_pinned(x, theta, omega)
+function [R, Zeta, Xi, Ts] = compute_order_parameters_pinned(theta, omega, T, dt)
     % Computes the order parameter S and the magnitude R for forced model
     %
     % Inputs:
@@ -7,26 +7,40 @@ function [S, R] = compute_order_parameters_pinned(x, theta, omega)
     %   omega - natural frequency of the pacemaker
     %
     % Outputs:
-    %   S - Asymptotic order parameter S (max of S+ and S-)
     %   R - Magnitude of the order parameter Z
+    %   Zeta - Asymptotic frequency displacement
+    %   Xi - Asymptotic phase displacement
+    %   Ts - Settling time
 
     % Use the last time step for asymptotic values
     final_theta = theta(:, end);
-    final_phi = mod(atan2(x(:,2,end), x(:,1,end)), 2*pi); % Remap phi to [0, 2*pi]
-
-    final_ref = (omega*50);
+    final_ref = (omega * T);
     % Remap angles to be within [-pi, pi]
     final_ref = mod(final_ref + pi, 2*pi) - pi;
 
-    % Compute the asymptotic value of S
-    psi_plus = final_phi + final_theta;
-    psi_minus = final_phi - final_theta;
-    S_plus = abs(mean(exp(1i * psi_plus)));
-    S_minus = abs(mean(exp(1i * psi_minus)));
-    % Compute S as the max between S+ and S-
-    S = max(S_plus, S_minus);
-
     % Compute the magnitude R
-    final_diff = -final_ref + final_theta;
-    R = norm(final_diff);
+    Z = mean(exp(1i * final_theta));
+    R = abs(Z);
+
+    % Compute theta dot
+    theta_dot = diff(theta, 1, 2);
+    disc_idx = find((theta_dot > -6.3) & (theta_dot < -6.2));
+    theta_dot(disc_idx) = theta_dot(disc_idx - 1);
+    theta_dot = theta_dot / dt;
+
+    % Compute Zeta and Xi
+    Zeta = abs(theta_dot(end) - omega);
+    Xi = mean(abs(final_theta - final_ref));
+
+    % Compute settling time
+    Zeta_time = abs(theta_dot - omega);
+    R_time = abs(mean(exp(1i * theta), 1));
+
+    Ts = 50; % Initialize Ts as NaN in case the conditions are never met
+    for t = 1:length(Zeta_time)
+        if Zeta_time(1,t) < 0.01 && R_time(t) > 0.99
+            Ts = t * dt; % Calculate Ts as time
+            break;
+        end
+    end
 end

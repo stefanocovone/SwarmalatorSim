@@ -10,6 +10,8 @@ arguments
     options.saveVideo logical = false
     options.saveImage logical = false
     options.frameRate (1,1) double {mustBePositive} = 10
+    options.omega (1,1) double = 0
+    options.plotOmegaLine logical = false
 end
 
 % Extract options
@@ -18,6 +20,8 @@ generateLastFrameOnly = options.generateLastFrameOnly;
 saveVideo = options.saveVideo;
 saveImage = options.saveImage;
 frameRate = options.frameRate;
+omega = options.omega;
+plotOmegaLine = options.plotOmegaLine;
 
 % Use current folder if savePath is empty
 if isempty(savePath)
@@ -46,6 +50,10 @@ set(gcf, 'Color', 'w'); % Set the figure background color to white
 phi = mod(atan2(x(:,2,1), x(:,1,1)), 2*pi); % Remap phi to [0, 2*pi]
 theta_remapped = mod(theta(:,1), 2*pi); % Remap theta to [0, 2*pi]
 h2 = scatter(phi, theta_remapped, 20, 'filled');
+hold on;
+if plotOmegaLine
+    omega_line = plot([0 2*pi], [omega*0 omega*0], 'k--', 'LineWidth', 1.5);
+end
 axis('equal');
 axis([0 2*pi 0 2*pi]);
 xticks([0 pi/2 pi 3*pi/2 2*pi]);
@@ -72,6 +80,9 @@ if ~generateLastFrameOnly
         phi = mod(atan2(x(:,2,t), x(:,1,t)), 2*pi); % Remap phi to [0, 2*pi]
         theta_remapped = mod(theta(:,t), 2*pi); % Remap theta to [0, 2*pi]
         set(h2, 'XData', phi, 'YData', theta_remapped);
+        if plotOmegaLine
+            set(omega_line, 'YData', mod([omega*t*dt omega*t*dt], 2*pi));
+        end
         title(['Time = ' num2str(t*dt)], 'Interpreter', 'latex');
         drawnow;
 
@@ -90,6 +101,9 @@ t = round(T/dt);
 phi = mod(atan2(x(:,2,t), x(:,1,t)), 2*pi); % Remap phi to [0, 2*pi]
 theta_remapped = mod(theta(:,t), 2*pi); % Remap theta to [0, 2*pi]
 set(h2, 'XData', phi, 'YData', theta_remapped);
+if plotOmegaLine
+    set(omega_line, 'YData', mod([omega*t*dt omega*t*dt], 2*pi));
+end
 title('');
 drawnow;
 
