@@ -5,10 +5,39 @@ This repository contains the supplementary material for "Swarmalators: Oscillato
 ## MATLAB Code
 The folder SwarmalatorSim contains the MATLAB code to simulate the system. It included pre-built simulation scenarios and utility functions for plotting and analysis.
 
+### Instructions
+
+The function Launcher.m launches a simulation for the swarmalators system:
+
+The codes for each of the simulations are:
+1. Single
+2. SyncRadii
+3. PhaseWaveRadii
+4. Parallel
+5. Disorder
+6. Bifurcation
+7. ParallelForced
+8. Forced
+9. Partial
+10. Pinning
+11. PinningFixedJ
+12. PinningTs
+
+If you want to define you simulation, save it in src/launcher and add the relative entry to this file.
+
+
+### Example code
+
+```Matlab
+simCode = 1  % to launch a single simulation
+Launcher(simCode)
+```
+
 ## Supplementary videos
 In the following, the supplementary videos for the project are presented:
 
-### Unforced system
+<details>
+<summary>Unforced system</summary>
 
 - Static Sync State
 
@@ -40,10 +69,12 @@ https://github.com/user-attachments/assets/7fcdb7e7-5877-4331-aa12-8ac5185483ee
 
 https://github.com/user-attachments/assets/924ae1f7-85a9-41ba-bd86-fa9658dcebfb
 
+</details>
 
 
+<details>
+<summary>Forced system</summary>
 
-### Forced system
 
 - Static Sync State - $F=2$
 
@@ -69,11 +100,13 @@ https://github.com/user-attachments/assets/88887a80-6f50-4ecf-8175-301b5801d9ea
 
 https://github.com/user-attachments/assets/10b9e5ee-a051-4a59-bd7b-e3594443c72e
 
+</details>
 
 
 
+<details>
+<summary>Partially forced system</summary>
 
-### Partially forced system
 
 - Static Sync State - $\omega=\pi/2$
 
@@ -116,10 +149,12 @@ https://github.com/user-attachments/assets/5babddac-176c-40ec-a3ed-65ea869ac8b9
 
 https://github.com/user-attachments/assets/48af887e-f00a-42cd-971a-4a9381ba0591
 
+</details>
 
 
+<details>
+<summary>Pinned system</summary>
 
-### Pinned system
 
 - $J=0.5$, $K=1$, $\sigma = 5$
 
@@ -127,5 +162,6 @@ https://github.com/user-attachments/assets/8506b49a-c1cc-40ce-bac9-83763460067e
 
 https://github.com/user-attachments/assets/9e1c83e0-336c-4a95-bc6e-4599413e5b40
 
+</details>
 
 
